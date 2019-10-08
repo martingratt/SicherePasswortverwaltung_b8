@@ -8,8 +8,8 @@
             $passwort = mysqli_escape_string($tunnel, $_POST["passwort"]);
             $passwortwh = mysqli_escape_string($tunnel, $_POST["passwortwh"]);
             $salt = openssl_random_pseudo_bytes(16);
-            $iterations = 1000;
-            $hash =  hash_pbkdf2("sha256", $passwort, $salt, $iterations, 50);
+            $iterations = 10000;
+            $hash =  hash_pbkdf2("sha3-512", $passwort, $salt, $iterations, 50);
 
              if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 

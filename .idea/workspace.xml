@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5b9846e4-e71f-4ce3-b46e-0756884fbdec" name="Default Changelist" comment="" />
+    <list default="true" id="5b9846e4-e71f-4ce3-b46e-0756884fbdec" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/insert_new_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/insert_new_user.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +17,9 @@
         <option value="HTML File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1RnlPwqRKJlxog3ozxgPiOm6JFW" />
   <component name="PropertiesComponent">
@@ -54,10 +60,22 @@
       <workItem from="1570310721994" duration="2127000" />
       <workItem from="1570368749682" duration="6060000" />
       <workItem from="1570378199832" duration="5606000" />
+      <workItem from="1570526785081" duration="6000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

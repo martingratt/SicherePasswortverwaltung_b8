@@ -43,7 +43,7 @@
 				$password = mysqli_escape_string($tunnel, ($_POST['password']));
 				//$hash = hash('sha256', $password);
 				$saltquery = "select salt from users where email = '$email'";
-				$iterations = 1000;
+				$iterations = 10000;
 
 				$query_run_salt = mysqli_query($tunnel,$saltquery);
 				//$row = mysqli_fetch_array($query_run_salt,MYSQLI_ASSOC);
@@ -56,7 +56,7 @@
                 	$salt = $row->salt;
                 }
 
-       			$hash =  hash_pbkdf2("sha256", $password, $salt, $iterations, 50);
+       			$hash =  hash_pbkdf2("sha3-512", $password, $salt, $iterations, 50);
 
 				$query = "select * from users where email='$email' and passwort='$hash' ";
 				//echo $query;
