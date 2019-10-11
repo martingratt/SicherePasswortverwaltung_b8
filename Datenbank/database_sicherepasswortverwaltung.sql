@@ -14,7 +14,7 @@ CREATE TABLE `commonpasswords` (
 )
 
 INSERT INTO commonpasswords (password) VALUES
-   ('123456'),
+   ('Qwertzuiop123'),
     ('password'),
     ('12345678'),
     ('qwerty'),
