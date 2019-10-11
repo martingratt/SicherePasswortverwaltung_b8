@@ -2,70 +2,170 @@
         include "db_newconnection.php";
 
         $ordiestring = "<p><strong>PHP Info: </strong>Abfrage war nicht möglich.</p>";
-            //alles klein
+
+            //Wertezuordnung der Inhalte des Formulars
+
             $email = mysqli_escape_string($tunnel, strtolower($_POST["email"]));
-            //verschlüsselung
             $passwort = mysqli_escape_string($tunnel, $_POST["passwort"]);
             $passwortwh = mysqli_escape_string($tunnel, $_POST["passwortwh"]);
-            $salt = openssl_random_pseudo_bytes(16);
-            $iterations = 10000;
-            $hash =  hash_pbkdf2("sha3-512", $passwort, $salt, $iterations, 50);
 
+
+
+            $loginattempt = 0;
+            $iterations = 10000;
+
+
+            //Eingabevalidierung, ob es sich um eine gülte Email Adresse hatte
              if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 
                 echo ("Bitte geben Sie eine gültige Email Adresse ein.");
 
                 } else {
 
+                 //Validierung, ob Passwörter übereinstimmen
                 if ($passwort == $passwortwh) {
-                    //$hash = hash('sha256', $passwort);
-                    //Vergleich ob alle Datensätze ausgefüllt wurden
+
+                    //Validierung, ob Passwort leer ist übereinstimmen
                     if ($_POST["passwort"] == NULL) {
+
                         echo "passwort ist leer";
+
                     } else {
-                        if (!preg_match('/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/', $passwort)) {
-                            echo 'Das Passwort entspricht nicht den Sicherheitsbestimmungen!<br>
-                              Das Passwor muss aus folgenden Bestandteilen bestehen:<br>
-                              - mindestens 8 Buchstaben<br>
-                              - Groß und Kleinbuchstaben<br>
-                              - Zahlen<br>
-                              - Es sollte nach Möglichkeit auch mindestens ein Sonderzeichen enthalten!';
+
+                    //Validierung, ob Passwort den Kriterien entspricht
+                    $validePasswort = passwordValidation($passwort);
+
+                     if ($validePasswort===false){
+
+                        echo 'Das Passwort entspricht nicht den Sicherheitsbestimmungen!<br>
+                                                                                    Das Passwor muss aus folgenden Bestandteilen bestehen:<br>
+                                                                                    - mindestens 8 Buchstaben<br>
+                                                                                    - Groß und Kleinbuchstaben<br>
+                                                                                    - Zahlen<br>
+                                                                                    - Es sollte nach Möglichkeit auch mindestens ein Sonderzeichen enthalten!';
+
                         } else {
 
-                            $control = 0;
-                            $sql = "SELECT email FROM users WHERE email = '$email'";
-                            $result = mysqli_query($tunnel, $sql) or die($ordiestring);
-                            while ($row = mysqli_fetch_object($result)) {
-                                $control++;
-                            }
-                            if ($control != 0) {
-                                $errorUserNameExists = true;
-                                echo "<p>Email <strong>$email</strong> existiert bereits! Versuchen sie eine andere...</p>";
-                            } else {
-                                $sql = "INSERT INTO users (email, salt, passwort) VALUES
-                                      ('" . $email . "', '" . $salt . "', '" . $hash . "');";
-                                $result = mysqli_query($tunnel, $sql);
-                                echo "<p>Ihr Benutzer wurde erfolgreich angelegt, melden Sie sich jetzt an.</p>";
+                            //Validierung, ob Passwort häufig vorkommt
+                            $control_password = checkCommonPasswords($passwort, $tunnel);
+
+                                if($control_password != 0){
+
+                                echo 'Das von Ihnen verwendete Passwort wird häufig verwendet';
+
+                                }
+                                    else {
+
+                                    //Validierung, ob sich die angegebene Email Adresse schon in der Datenbank befindet
+
+                                    $controlEmail = checkEmailExist($email, $tunnel);
+
+
+                                        if ($controlEmail != 0) {
+
+                                            echo "<p>Email <strong>$email</strong> existiert bereits! Versuchen sie eine andere...</p>";
+
+                                        } else {
+
+                                        //Erzeugung des Hashes und Speichern in die Datenbank
+
+                                        createNewUser($passwort, $email, $loginattempt, $iterations, $tunnel);
+
+                                            echo "<p>Ihr Benutzer wurde erfolgreich angelegt, melden Sie sich jetzt an.</p>";
+
+                                            }
                             }
                         }
                     }
                 } else {
+
                     echo "Achtung! Passwörter stimmen nicht überein";
+
                 }
 
-                //else {                    echo "Diese Email "                }
+
          }
             mysqli_close($tunnel);
 
-            function getSalt() {
-                 $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\][{}\'";:?.>,<!@#$%^&*()-_=+|';
-                 $randStringLen = 64;
+            function generateRandomSalt($length = 50) {
 
-                 $randString = "";
-                 for ($i = 0; $i < $randStringLen; $i++) {
-                     $randString .= $charset[mt_rand(0, strlen($charset) - 1)];
-                 }
+                $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-                 return $randString;
+                $charactersLength = strlen($characters);
+
+                $randomString = '';
+
+                for ($i = 0; $i < $length; $i++) {
+                    $randomString .= $characters[rand(0, $charactersLength - 1)];
+                }
+
+                return $randomString;
             }
+
+            function passwordValidation($passwort){
+
+                $uppercase = preg_match('@[A-Z]@', $passwort);
+
+                $lowercase = preg_match('@[a-z]@', $passwort);
+
+                $number    = preg_match('@[0-9]@', $passwort);
+
+                $valide;
+
+                if (!$uppercase || !$lowercase || !$number || strlen($passwort) < 8) {
+
+                $valide = false;
+
+                } else {$valide = true;}
+
+                return $valide;
+
+                echo $valide;
+            }
+
+
+
+            function checkCommonPasswords($passwort, $tunnel){
+
+                 $controlPassword = 0;
+
+                 $commonpasswordquery = "select id from commonpasswords where password = '$passwort'";
+
+                 $result = mysqli_query($tunnel, $commonpasswordquery) or die($ordiestring);
+
+                 while ($row = mysqli_fetch_object($result)) {
+                 $controlPassword++;}
+
+                 return $controlPassword;
+
+            }
+
+            function checkEmailExist($email, $tunnel){
+            $control = 0;
+                                                $sql = "SELECT email FROM users WHERE email = '$email'";
+
+                                                $result = mysqli_query($tunnel, $sql) or die($ordiestring);
+
+                                                while ($row = mysqli_fetch_object($result)) {
+                                                    $control++;
+                                                }
+
+                                                return $control;
+            }
+
+            function createNewUser($passwort, $email, $loginattempt, $iterations, $tunnel){
+
+            //Generierung des Salts
+            $salt = generateRandomSalt();
+
+            //Generierung des Hashes mit PBKDF2
+            $hash =  hash_pbkdf2("sha3-512", $passwort, $salt, $iterations, 128);
+
+            $sql = "INSERT INTO users (email, salt, passwort, loginattempt) VALUES
+                                                              ('" . $email . "', '" . $salt . "', '" . $hash . "', '" . $loginattempt . "');";
+                                                          echo $sql;
+                                                        $result = mysqli_query($tunnel, $sql);
+            }
+
+
 ?>

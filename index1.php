@@ -36,7 +36,6 @@
 <br><br>
 
 		<?php
-
 			if(isset($_POST['login']))
 			{
 
@@ -50,42 +49,58 @@
 				$loginattempt = 0;
 				$salt = 0;
 				$max_loginattempts = 3;
-				$accessData = 0;
-
-
-                //Anzahl der bereits getätigte Loginversuche herausfinden
-                $loginattempt = getLoginattempts($email, $tunnel);
-
-				if ($loginattempt>=$max_loginattempts) {
-
-				echo "Es wurden zu viele Loginversuche auf diese Email-Adresse angewandt, bitte kontaktieren Sie den Administrator!";
-
-				} else {
 
 				$salt = getSalt($email, $tunnel);
 
-				$hash =  getHash($password, $salt, $iterations);
+                $loginattempt = getLoginattempts($email, $tunnel);
 
-                //Überprüfen, ob Email und Passwort in der Datenbank vorkommen
-				$accessData = checkEmailPassword($email, $hash, $tunnel);
 
-                        if ($accessData) {
+       			$hash =  getHash($password, $salt, $iterations);
 
-                        resetLoginattempts($email, $tunnel, $loginattempt);
 
-                        header( "Location: helloworld.php");
+				$query = "select * from users where email='$email' and passwort='$hash' ";
 
-                                        } else {
+				$query_run = mysqli_query($tunnel,$query);
 
-                                        increaseLoginattempts($email, $tunnel, $loginattempt);
 
-                                        echo '<script type="text/javascript">alert("No such User exists. Invalid Credentials")</script>';
+				//$check = checkEmailPassword($email, $password, $tunnel);
 
-                                        }
+				if($query_run)
+				{
+
+				if($loginattempt>=$max_loginattempts) {
+				echo "Es wurden zu viele Loginversuche auf diese Email-Adresse angewandt, bitte kontaktieren Sie den Administrator";
+				}
+
+				else {
+
+				if(mysqli_num_rows($query_run)>0)
+                					{
+
+                					resetLoginattempts($email, $tunnel, $loginattempt);
+
+                					header( "Location: helloworld.php");
+                					}
+                					else
+                					{
+
+                					    increaseLoginattempts($email, $tunnel, $loginattempt);
+
+                						echo '<script type="text/javascript">alert("No such User exists. Invalid Credentials")</script>';
+
+                					}
 
 				}
-            }
 
+				}
+				else
+				{
+					echo '<script type="text/javascript">alert("Database Error")</script>';
+				}
+			}
+			else
+			{
+			}
 			mysqli_close($tunnel);
 
 			function resetLoginattempts($email, $tunnel, $loginattempt) {
@@ -93,8 +108,10 @@
 
                            $query_run = mysqli_query($tunnel,$query_reset_loginattempt);
 
+                           echo "Erfolgreicher login";
 
-                                }
+                           echo $loginattempt;
+                        }
 
             function getLoginattempts($email, $tunnel) {
                                        $loginattempt = 0;
@@ -117,6 +134,7 @@
 
                                        $query_run = mysqli_query($tunnel,$query_increase_loginattempt);
 
+                                       echo $loginattempt;
                                     }
 
             function getSalt($email, $tunnel) {
@@ -138,7 +156,7 @@
             return $hash;
             }
 
-            function checkEmailPassword($email, $hash, $tunnel){
+            function checkEmailPassword($email, $password, $tunnel){
 
             $control = 0;
 

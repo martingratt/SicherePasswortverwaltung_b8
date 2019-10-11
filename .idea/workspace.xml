@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5b9846e4-e71f-4ce3-b46e-0756884fbdec" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Datenbank/database_sicherepasswortverwaltung.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Datenbank/database_sicherepasswortverwaltung.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insert_new_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/insert_new_user.php" afterDir="false" />
     </list>
@@ -24,15 +26,17 @@
   <component name="ProjectId" id="1RnlPwqRKJlxog3ozxgPiOm6JFW" />
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\SicherePasswortverwaltung_b8" />
+      <recent name="C:\xampp\htdocs\SicherePasswortverwaltung" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\xampp\htdocs\SicherePasswortverwaltung\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\SicherePasswortverwaltung" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -60,19 +64,27 @@
       <workItem from="1570310721994" duration="2127000" />
       <workItem from="1570368749682" duration="6060000" />
       <workItem from="1570378199832" duration="5606000" />
-      <workItem from="1570526785081" duration="6000" />
+      <workItem from="1570526785081" duration="358000" />
+      <workItem from="1570734684928" duration="10289000" />
+      <workItem from="1570789597003" duration="2118000" />
+      <workItem from="1570811937725" duration="7685000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.php" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
