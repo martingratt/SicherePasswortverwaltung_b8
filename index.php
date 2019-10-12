@@ -132,8 +132,13 @@
                                        }
 
             function getHash($password, $salt, $iterations){
-
+            $startzeit = microtime(true);
             $hash = hash_pbkdf2("sha3-512", $password, $salt, $iterations, 128);
+            $stopzeit = microtime(true);
+            $laufzeit = ($stopzeit-$startzeit)*1000;
+            $handle = fopen("C:\\xampp\\htdocs\\SicherePasswortverwaltung_b8\\berechnungsdauer.txt", 'w');
+            fwrite ($handle, $laufzeit);
+            fclose ($handle);
 
             return $hash;
             }

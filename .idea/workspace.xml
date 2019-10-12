@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5b9846e4-e71f-4ce3-b46e-0756884fbdec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Datenbank/database_sicherepasswortverwaltung.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Datenbank/database_sicherepasswortverwaltung.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/insert_new_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/insert_new_user.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +68,8 @@
       <workItem from="1570811937725" duration="7685000" />
       <workItem from="1570826973012" duration="7664000" />
       <workItem from="1570876004266" duration="3034000" />
-      <workItem from="1570891469832" duration="2278000" />
+      <workItem from="1570891469832" duration="3214000" />
+      <workItem from="1570902950255" duration="634000" />
     </task>
     <servers />
   </component>
