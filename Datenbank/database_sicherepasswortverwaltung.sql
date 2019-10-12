@@ -5,16 +5,16 @@ CREATE TABLE `users` (
   `passwort` VARCHAR(255) NOT NULL,
   `loginattempt` INT,
   PRIMARY KEY (`id`)
-)
+);
 
 CREATE TABLE `commonpasswords` ( 
   `id` INT NOT NULL AUTO_INCREMENT ,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
-)
+);
 
 INSERT INTO commonpasswords (password) VALUES
-   ('Qwertzuiop123'),
+   ('VrASGgaD8fRwwtaap6V7EBV4W'),
     ('password'),
     ('12345678'),
     ('qwerty'),

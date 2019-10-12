@@ -6,8 +6,8 @@
             //Wertezuordnung der Inhalte des Formulars
 
             $email = mysqli_escape_string($tunnel, strtolower($_POST["email"]));
-            $passwort = mysqli_escape_string($tunnel, $_POST["passwort"]);
-            $passwortwh = mysqli_escape_string($tunnel, $_POST["passwortwh"]);
+            $passwort = ($_POST["passwort"]);
+            $passwortwh = ($_POST["passwortwh"]);
 
 
 
@@ -39,7 +39,7 @@
 
                         echo 'Das Passwort entspricht nicht den Sicherheitsbestimmungen!<br>
                                                                                     Das Passwor muss aus folgenden Bestandteilen bestehen:<br>
-                                                                                    - mindestens 8 Buchstaben<br>
+                                                                                    - mindestens 20 Buchstaben<br>
                                                                                     - Groß und Kleinbuchstaben<br>
                                                                                     - Zahlen<br>
                                                                                     - Es sollte nach Möglichkeit auch mindestens ein Sonderzeichen enthalten!';
@@ -51,7 +51,7 @@
 
                                 if($control_password != 0){
 
-                                echo 'Das von Ihnen verwendete Passwort wird häufig verwendet';
+                                echo 'Das von Ihnen verwendete Passwort wird häufig verwendet, bitte verwenden Sie ein anderes!';
 
                                 }
                                     else {
@@ -112,7 +112,7 @@
 
                 $valide;
 
-                if (!$uppercase || !$lowercase || !$number || strlen($passwort) < 8) {
+                if (!$uppercase || !$lowercase || !$number || strlen($passwort) < 20) {
 
                 $valide = false;
 
@@ -163,7 +163,7 @@
 
             $sql = "INSERT INTO users (email, salt, passwort, loginattempt) VALUES
                                                               ('" . $email . "', '" . $salt . "', '" . $hash . "', '" . $loginattempt . "');";
-                                                          echo $sql;
+
                                                         $result = mysqli_query($tunnel, $sql);
             }
 

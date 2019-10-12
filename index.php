@@ -42,8 +42,8 @@
 
 			    ///Wertezuordnung der Inhalte des Formulars
 
-				$email=mysqli_escape_string($tunnel, $_POST['email']);
-				$password = mysqli_escape_string($tunnel, ($_POST['password']));
+				$email = mysqli_escape_string($tunnel, $_POST['email']);
+				$password =  ($_POST['password']);
 
 
 				$iterations = 10000;
@@ -88,14 +88,6 @@
 
 			mysqli_close($tunnel);
 
-			function resetLoginattempts($email, $tunnel, $loginattempt) {
-                           $query_reset_loginattempt = "UPDATE users SET loginattempt = '0' WHERE email='$email' ";
-
-                           $query_run = mysqli_query($tunnel,$query_reset_loginattempt);
-
-
-                                }
-
             function getLoginattempts($email, $tunnel) {
                                        $loginattempt = 0;
 
@@ -118,6 +110,14 @@
                                        $query_run = mysqli_query($tunnel,$query_increase_loginattempt);
 
                                     }
+
+			function resetLoginattempts($email, $tunnel, $loginattempt) {
+                           $query_reset_loginattempt = "UPDATE users SET loginattempt = '0' WHERE email='$email' ";
+
+                           $query_run = mysqli_query($tunnel,$query_reset_loginattempt);
+
+
+                                }
 
             function getSalt($email, $tunnel) {
 
